@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed_microservice
+  labels:
+    app: feed_microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feed_microservice
+  template:
+    metadata:
+      labels:
+        app: feed_microservice
+    spec:
+      containers:
+      - name: feed_microservice
+        image: josemarcial1311/feed_microservice
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /api/v0
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
